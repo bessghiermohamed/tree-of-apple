@@ -1,5 +1,5 @@
 :HL["/tree-of-apple/_next/static/chunks/a8512877186c89c4.css","style"]
-:HL["/tree-of-apple/_next/static/chunks/bcf10665fd674d75.css","style"]
+:HL["/tree-of-apple/_next/static/chunks/a98d00961c9cbe07.css","style"]
 :HL["/tree-of-apple/_next/static/media/48e6fa8a5baca31f-s.p.33d01b36.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/tree-of-apple/_next/static/media/4b676bcffc00356a-s.p.c22aaca1.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/tree-of-apple/_next/static/media/80c3108817f102b0-s.p.1aa18ac2.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
@@ -7,4 +7,4 @@
 :HL["/tree-of-apple/_next/static/media/e9f32d51db34fd0c-s.p.28c55982.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap","style"]
 :HL["https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700;900&display=swap","style"]
-0:{"buildId":"aznaX_5sfdzfHs85rvIhu","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+0:{"buildId":"L1PE3L0l0LEH0lZMJIHoa","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}

@@ -42,7 +42,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 
-type Page = 'home' | 'register' | 'login' | 'faq' | 'about' | 'contact' | '404';
+type Page = 'home' | 'register' | 'login' | 'faq' | 'about' | 'contact' | 'experts' | '404';
 
 // ===================== MATERIAL ICON HELPER =====================
 const MIcon = ({ name, className = '', filled = false }: { name: string; className?: string; filled?: boolean }) => (
@@ -62,9 +62,10 @@ function Navbar({ currentPage, navigate }: { currentPage: Page; navigate: (p: Pa
 
   const navLinks = [
     { label: 'الرئيسية', page: 'home' as Page, icon: 'home' },
-    { label: 'من نحن', page: 'about' as Page, icon: 'info' },
+    { label: 'الخبراء', page: 'experts' as Page, icon: 'group' },
     { label: 'الأسئلة الشائعة', page: 'faq' as Page, icon: 'help' },
-    { label: 'اتصل بنا', page: 'contact' as Page, icon: 'call' },
+    { label: 'من نحن', page: 'about' as Page, icon: 'info' },
+    { label: 'تواصل معنا', page: 'contact' as Page, icon: 'call' },
   ];
 
   return (
@@ -80,7 +81,7 @@ function Navbar({ currentPage, navigate }: { currentPage: Page; navigate: (p: Pa
           {/* Logo */}
           <button onClick={() => navigate('home')} className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0d7c4a] to-[#1a3a2a] flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-              <MIcon name="gavel" className="text-white text-xl" />
+              <MIcon name="balance" className="text-white text-xl" />
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-[#1a3a2a] leading-tight">بوصلة الحقوق</h1>
@@ -178,7 +179,7 @@ function Navbar({ currentPage, navigate }: { currentPage: Page; navigate: (p: Pa
                   }}
                   className="flex-1 py-3 rounded-xl bg-gradient-to-l from-[#0d7c4a] to-[#1a3a2a] text-white text-sm font-bold"
                 >
-                  دخول
+                  دخول login
                 </button>
               </div>
             </div>
@@ -199,11 +200,10 @@ function Footer({ navigate }: { navigate: (p: Page) => void }) {
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 rounded-xl bg-[#0d7c4a] flex items-center justify-center">
-                <MIcon name="gavel" className="text-white text-xl" />
+                <MIcon name="balance" className="text-white text-xl" />
               </div>
               <div>
-                <h3 className="text-lg font-bold">بوصلة الحقوق</h3>
-                <p className="text-xs text-white/50">الرقمية</p>
+                <h3 className="text-lg font-bold">بوصلة الحقوق الرقمية</h3>
               </div>
             </div>
             <p className="text-sm text-white/60 leading-relaxed">
@@ -216,14 +216,16 @@ function Footer({ navigate }: { navigate: (p: Page) => void }) {
             <h4 className="font-bold text-[#c9a84c] mb-4">روابط سريعة</h4>
             <ul className="space-y-2">
               {[
-                { label: 'الرئيسية', page: 'home' as Page },
-                { label: 'من نحن', page: 'about' as Page },
+                { label: 'عن المنصة', page: 'about' as Page },
                 { label: 'الأسئلة الشائعة', page: 'faq' as Page },
-                { label: 'اتصل بنا', page: 'contact' as Page },
-              ].map((item) => (
-                <li key={item.page}>
+                { label: 'شروط الاستخدام', page: null },
+                { label: 'سياسة الخصوصية', page: null },
+                { label: 'سياسة الكوكيز', page: null },
+                { label: 'تواصل معنا', page: 'contact' as Page },
+              ].map((item, idx) => (
+                <li key={idx}>
                   <button
-                    onClick={() => navigate(item.page)}
+                    onClick={() => item.page && navigate(item.page)}
                     className="text-sm text-white/60 hover:text-[#c9a84c] transition-colors"
                   >
                     {item.label}
@@ -233,21 +235,21 @@ function Footer({ navigate }: { navigate: (p: Page) => void }) {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Direct Contact */}
           <div>
-            <h4 className="font-bold text-[#c9a84c] mb-4">تواصل معنا</h4>
+            <h4 className="font-bold text-[#c9a84c] mb-4">تواصل مباشر</h4>
             <ul className="space-y-3">
-              <li className="flex items-center gap-2 text-sm text-white/60">
-                <Mail size={16} className="text-[#0d7c4a]" />
-                info@bawsalat.dz
+              <li>
+                <a href="mailto:support@bawsalat.dz" className="text-sm text-white/60 hover:text-[#c9a84c] transition-colors flex items-center gap-2">
+                  <Mail size={16} className="text-[#0d7c4a]" />
+                  support@bawsalat.dz
+                </a>
               </li>
-              <li className="flex items-center gap-2 text-sm text-white/60">
-                <Phone size={16} className="text-[#0d7c4a]" />
-                +213 21 00 00 00
-              </li>
-              <li className="flex items-center gap-2 text-sm text-white/60">
-                <MapPin size={16} className="text-[#0d7c4a]" />
-                الجزائر العاصمة، الجزائر
+              <li>
+                <button className="text-sm text-white/60 hover:text-[#c9a84c] transition-colors flex items-center gap-2">
+                  <MIcon name="support_agent" className="text-[#0d7c4a] text-lg" />
+                  المساعدة التقنية
+                </button>
               </li>
             </ul>
           </div>
@@ -262,9 +264,21 @@ function Footer({ navigate }: { navigate: (p: Page) => void }) {
                 placeholder="بريدك الإلكتروني"
                 className="flex-1 px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#0d7c4a]"
               />
-              <button className="px-4 py-2.5 rounded-xl bg-[#0d7c4a] hover:bg-[#0d7c4a]/80 text-white text-sm font-bold transition-colors">
-                اشترك
+              <button className="px-4 py-2.5 rounded-xl bg-[#0d7c4a] hover:bg-[#0d7c4a]/80 text-white transition-colors">
+                <MIcon name="send" className="text-lg" />
               </button>
+            </div>
+            {/* Social Media */}
+            <div className="flex items-center gap-4 mt-6">
+              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-[#0d7c4a] transition-colors" title="فيسبوك">
+                <MIcon name="public" className="text-white text-lg" />
+              </a>
+              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-[#0d7c4a] transition-colors" title="لينكد إن">
+                <MIcon name="work" className="text-white text-lg" />
+              </a>
+              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-[#0d7c4a] transition-colors" title="يوتيوب">
+                <MIcon name="play_circle" className="text-white text-lg" />
+              </a>
             </div>
           </div>
         </div>
@@ -285,37 +299,37 @@ function Footer({ navigate }: { navigate: (p: Page) => void }) {
 function HomePage({ navigate }: { navigate: (p: Page) => void }) {
   const lawyers = [
     {
-      name: 'د. أحمد بن عمر',
-      specialty: 'جرائم إلكترونية',
+      name: 'أ. محمد العلي',
+      specialty: 'القانون الجنائي',
       experience: '15 سنة',
-      city: 'الجزائر العاصمة',
+      city: 'الرياض',
       rating: 4.9,
       reviews: 128,
       gradient: 'from-[#0d7c4a] to-[#1a3a2a]',
     },
     {
-      name: 'أ. فاطمة زهراء بوجلال',
-      specialty: 'الملكية الفكرية',
+      name: 'أ. سارة الأحمد',
+      specialty: 'القانون المدني',
       experience: '12 سنة',
-      city: 'وهران',
+      city: 'جدة',
       rating: 4.8,
       reviews: 95,
       gradient: 'from-[#1a3a2a] to-[#0d7c4a]',
     },
     {
-      name: 'د. كريم بلقاسم',
-      specialty: 'القانون التجاري',
+      name: 'د. خالد العمري',
+      specialty: 'قانون الشركات',
       experience: '18 سنة',
-      city: 'قسنطينة',
+      city: 'الدمام',
       rating: 4.9,
       reviews: 156,
       gradient: 'from-[#0d7c4a] to-[#c9a84c]',
     },
     {
-      name: 'أ. سارة محمدي',
-      specialty: 'حماية البيانات',
+      name: 'أ. نورة السعيد',
+      specialty: 'قانون الأسرة',
       experience: '10 سنة',
-      city: 'سطيف',
+      city: 'الرياض',
       rating: 4.7,
       reviews: 87,
       gradient: 'from-[#c9a84c] to-[#0d7c4a]',
@@ -323,13 +337,13 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
   ];
 
   const specialties = [
-    { name: 'جرائم إلكترونية', icon: 'shield', count: '45+ محامٍ' },
-    { name: 'القانون التجاري', icon: 'store', count: '38+ محامٍ' },
+    { name: 'جرائم إلكترونية', icon: 'fingerprint', count: '45+ محامٍ' },
+    { name: 'القانون التجاري', icon: 'gavel', count: '38+ محامٍ' },
     { name: 'الملكية الفكرية', icon: 'copyright', count: '32+ محامٍ' },
-    { name: 'حماية البيانات', icon: 'database', count: '28+ محامٍ' },
-    { name: 'الأحوال الشخصية', icon: 'family_restroom', count: '55+ محامٍ' },
-    { name: 'العقارات', icon: 'apartment', count: '42+ محامٍ' },
-    { name: 'المالية والبنوك', icon: 'account_balance', count: '35+ محامٍ' },
+    { name: 'حماية البيانات', icon: 'lock', count: '28+ محامٍ' },
+    { name: 'الأحوال الشخصية', icon: 'family_star', count: '55+ محامٍ' },
+    { name: 'العقارات', icon: 'real_estate_agent', count: '42+ محامٍ' },
+    { name: 'المالية والبنوك', icon: 'payments', count: '35+ محامٍ' },
     { name: 'قضايا العمل', icon: 'work', count: '40+ محامٍ' },
   ];
 
@@ -544,13 +558,21 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-14"
+            className="text-center sm:text-right mb-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#c9a84c]/10 text-[#c9a84c] text-sm font-medium mb-4">
-              <MIcon name="workspace_premium" className="text-lg" />
-              خبراء معتمدون
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#c9a84c]/10 text-[#c9a84c] text-sm font-medium mb-4">
+                  <MIcon name="workspace_premium" className="text-lg" />
+                  خبراء معتمدون
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-[#1a3a2a]">نخبة المحامين المعتمدين</h2>
+              </div>
+              <button onClick={() => navigate('experts')} className="hidden sm:flex items-center gap-1 text-[#0d7c4a] font-bold hover:underline shrink-0">
+                عرض الكل
+                <MIcon name="arrow_back" className="text-lg" />
+              </button>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#1a3a2a]">نخبة المحامين المعتمدين</h2>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -706,15 +728,17 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
               <div className="flex flex-wrap justify-center gap-4">
                 <button
                   onClick={() => navigate('register')}
-                  className="px-8 py-4 rounded-2xl bg-white text-[#0d7c4a] font-bold text-lg hover:shadow-xl transition-all hover:scale-[1.02]"
+                  className="px-8 py-4 rounded-2xl bg-white text-[#0d7c4a] font-bold text-lg hover:shadow-xl transition-all hover:scale-[1.02] flex items-center gap-2"
                 >
-                  سجّل الآن مجاناً
+                  احجز استشارة الآن
+                  <MIcon name="arrow_back" className="text-xl" />
                 </button>
                 <button
-                  onClick={() => navigate('contact')}
-                  className="px-8 py-4 rounded-2xl border-2 border-white/30 text-white font-bold text-lg hover:bg-white/10 transition-all"
+                  onClick={() => navigate('register')}
+                  className="px-8 py-4 rounded-2xl border-2 border-white/30 text-white font-bold text-lg hover:bg-white/10 transition-all flex items-center gap-2"
                 >
-                  تواصل معنا
+                  <MIcon name="person_add" className="text-xl" />
+                  سجل كمحامٍ
                 </button>
               </div>
             </div>
@@ -1203,28 +1227,34 @@ function FAQPage({ navigate }: { navigate: (p: Page) => void }) {
 
   const faqs = [
     {
-      q: 'كيف يمكنني حجز استشارة قانونية؟',
-      a: 'يمكنك حجز استشارة قانونية بسهولة من خلال إنشاء حساب على المنصة، ثم تصفح قائمة المحامين المعتمدين واختيار الأنسب لقضيتك، ثم الضغط على زر "حجز استشارة" واختيار الموعد المناسب لك.',
+      q: 'ما هي منصة بوصلة الحقوق الرقمية؟',
+      a: 'منصة بوصلة الحقوق الرقمية هي منصة إلكترونية متكاملة تهدف إلى ربط المواطنين بالمحامين المعتمدين في الجزائر، وتوفير استشارات قانونية آمنة وموثوقة عبر الإنترنت.',
+      icon: 'account_balance',
     },
     {
-      q: 'هل الاستشارات القانونية على المنصة آمنة؟',
-      a: 'نعم، نستخدم أحدث تقنيات التشفير لحماية جميع المحادثات والبيانات الشخصية. المنصة معتمدة رسمياً وتلتزم بأعلى معايير الأمان الرقمي بما في ذلك تشفير 256-bit و SSL.',
+      q: 'كيف يمكنني اختيار المحامي المناسب لقضيتي؟',
+      a: 'يمكنك تصفح قائمة المحامين المعتمدين حسب التخصص والمدينة، والاطلاع على تقييمات العملاء السابقين، ثم حجز استشارة مباشرة مع المحامي الذي يناسب احتياجاتك.',
+      icon: 'person_search',
     },
     {
-      q: 'كيف يتم التحقق من المحامين المعتمدين؟',
-      a: 'يخضع كل محامٍ لعملية تحقق صارمة تشمل التحقق من رخصة المحاماة، السجل المهني، والخبرة العملية. كما نقوم بمراجعة دورية لضمان استمرار الجودة والالتزام بالمعايير المهنية.',
+      q: 'هل التعامل مع المنصة يحفظ خصوصية بياناتي؟',
+      a: 'نعم، نستخدم أحدث تقنيات التشفير لحماية جميع بياناتك ومحادثاتك. المنصة ملتزمة بأعلى معايير الأمان السيبراني وحماية البيانات الشخصية.',
+      icon: 'security',
     },
     {
-      q: 'ما هي تكلفة الاستشارة القانونية؟',
-      a: 'تختلف التكلفة حسب نوع الاستشارة وتخصص المحامي. نقدم استشارات أولية مجانية لبعض الحالات، كما توجد خطط اشتراك متنوعة تناسب مختلف الميزانيات.',
+      q: 'كيف يتم سداد رسوم الاستشارة القانونية؟',
+      a: 'يمكنك سداد رسوم الاستشارة عبر عدة وسائل دفع إلكترونية آمنة متاحة على المنصة، بما في ذلك بطاقات الائتمان والتحويل البنكي.',
+      icon: 'payments',
     },
     {
-      q: 'هل يمكنني الحصول على استشارة عاجلة؟',
-      a: 'نعم، نقدم خدمة الاستشارة العاجلة المتاحة على مدار الساعة. يمكنك طلب استشارة عاجلة وسيتم ربطك بأقرب محامٍ متخصص متاح خلال دقائق.',
+      q: 'هل الاستشارات المقدمة عبر المنصة معترف بها؟',
+      a: 'نعم، جميع الاستشارات المقدمة عبر المنصة من محامين معتمدين ومرخصين رسمياً، وهي ملزمة قانونياً وفق التشريعات الجزائرية.',
+      icon: 'verified',
     },
     {
-      q: 'ما هي المناطق التي تغطيها المنصة؟',
-      a: 'تغطي المنصة جميع ولايات الجزائر الـ 58. لدينا محامون معتمدون في كل ولاية يمكنهم تقديم استشارات حول القانون الجزائري، مع إمكانية الاستشارة عن بُعد لجميع المناطق.',
+      q: 'ماذا أفعل إذا واجهت مشكلة تقنية أثناء استخدام المنصة؟',
+      a: 'يمكنك التواصل مع فريق الدعم التقني عبر صفحة تواصل معنا أو من خلال البريد الإلكتروني support@bawsalat.dz، وسنقوم بحل مشكلتك في أسرع وقت ممكن.',
+      icon: 'support_agent',
     },
   ];
 
@@ -1252,7 +1282,10 @@ function FAQPage({ navigate }: { navigate: (p: Page) => void }) {
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
                   className="w-full flex items-center justify-between p-5 sm:p-6 text-right"
                 >
-                  <span className="font-bold text-[#1a3a2a] text-sm sm:text-base leading-relaxed">{faq.q}</span>
+                  <span className="font-bold text-[#1a3a2a] text-sm sm:text-base leading-relaxed flex items-center gap-2">
+                    <MIcon name={(faqs[i] as any).icon || 'help'} className="text-[#0d7c4a] text-lg shrink-0" />
+                    {faq.q}
+                  </span>
                   <div
                     className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mr-4 transition-all ${
                       openIndex === i ? 'bg-[#0d7c4a] text-white rotate-180' : 'bg-[#0d7c4a]/10 text-[#0d7c4a]'
@@ -1301,11 +1334,11 @@ function FAQPage({ navigate }: { navigate: (p: Page) => void }) {
               className="px-6 py-3 rounded-xl bg-gradient-to-l from-[#0d7c4a] to-[#1a3a2a] text-white font-bold text-sm hover:shadow-lg hover:shadow-[#0d7c4a]/20 transition-all flex items-center gap-2"
             >
               <MIcon name="mail" className="text-lg" />
-              أرسل رسالة
+              تواصل معنا الآن
             </button>
             <button className="px-6 py-3 rounded-xl border-2 border-[#0d7c4a] text-[#0d7c4a] font-bold text-sm hover:bg-[#0d7c4a] hover:text-white transition-all flex items-center gap-2">
-              <MIcon name="call" className="text-lg" />
-              اتصل بنا
+              <MIcon name="chat" className="text-lg" />
+              المحادثة الفورية
             </button>
           </div>
         </motion.div>
@@ -1318,22 +1351,22 @@ function FAQPage({ navigate }: { navigate: (p: Page) => void }) {
 function AboutPage() {
   const roadmap = [
     {
-      year: '2026',
-      title: 'مرحلة التأسيس',
+      year: 'المرحلة الأولى',
+      title: 'حجر الأساس',
       desc: 'إطلاق المنصة وتأسيس شبكة المحامين المعتمدين في الجزائر العاصمة والمدن الكبرى',
-      icon: 'rocket_launch',
+      icon: 'foundation',
     },
     {
-      year: '2027',
-      title: 'مرحلة التوسع',
+      year: 'المرحلة الثانية',
+      title: 'التوسع والتمكين',
       desc: 'توسيع التغطية لتشمل جميع ولايات الجزائر وإضافة خدمات الترجمة القانونية',
       icon: 'trending_up',
     },
     {
-      year: '2028',
-      title: 'مرحلة الريادة',
+      year: 'المرحلة الثالثة',
+      title: 'التكامل الذكي',
       desc: 'أن تصبح المنصة المرجع الأول للخدمات القانونية الرقمية في شمال أفريقيا',
-      icon: 'emoji_events',
+      icon: 'smart_toy',
     },
   ];
 
@@ -1351,7 +1384,7 @@ function AboutPage() {
             <div className="w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-lg flex items-center justify-center mx-auto mb-6">
               <MIcon name="info" className="text-white text-4xl" />
             </div>
-            <h1 className="text-3xl sm:text-5xl font-black text-white mb-4">من نحن</h1>
+            <h1 className="text-3xl sm:text-5xl font-black text-white mb-4">رسالتنا هي إرساء قواعد العدالة في الفضاء الرقمي الجزائري</h1>
             <p className="text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
               بوصلة الحقوق الرقمية هي منصة جزائرية رائدة تهدف إلى تسهيل الوصول إلى الخدمات القانونية وتحقيق العدالة
               الرقمية لكل مواطن
@@ -1502,7 +1535,7 @@ function ContactPage() {
           <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#0d7c4a] to-[#1a3a2a] flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#0d7c4a]/15">
             <MIcon name="contact_mail" className="text-white text-4xl" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-[#1a3a2a] mb-3">اتصل بنا</h1>
+          <h1 className="text-3xl sm:text-4xl font-black text-[#1a3a2a] mb-3">نحن هنا لخدمتك</h1>
           <p className="text-[#1a3a2a]/60 max-w-lg mx-auto">نحن هنا لمساعدتك. لا تتردد في التواصل معنا لأي استفسار</p>
         </motion.div>
 
@@ -1608,10 +1641,9 @@ function ContactPage() {
                       className="w-full pr-12 pl-4 py-3.5 rounded-xl bg-white/70 border border-[#0d7c4a]/10 text-[#1a3a2a] focus:outline-none focus:border-[#0d7c4a] focus:ring-2 focus:ring-[#0d7c4a]/10 transition-all appearance-none"
                     >
                       <option value="">اختر نوع الاستفسار</option>
-                      <option value="consultation">استشارة قانونية</option>
-                      <option value="technical">مشكلة تقنية</option>
-                      <option value="partnership">شراكة وتعاون</option>
-                      <option value="complaint">شكوى أو اقتراح</option>
+                      <option value="technical">دعم تقني وفني</option>
+                      <option value="financial">استفسارات مالية وباقات</option>
+                      <option value="verification">توثيق الحسابات القانونية</option>
                       <option value="other">أخرى</option>
                     </select>
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -1635,7 +1667,7 @@ function ContactPage() {
                   className="w-full py-4 rounded-2xl bg-gradient-to-l from-[#0d7c4a] to-[#1a3a2a] text-white font-bold text-lg hover:shadow-lg hover:shadow-[#0d7c4a]/25 transition-all flex items-center justify-center gap-2"
                 >
                   <MIcon name="send" className="text-xl" />
-                  إرسال الرسالة
+                  إرسال الطلب
                 </button>
               </form>
             </div>
@@ -1685,6 +1717,103 @@ function NotFoundPage({ navigate }: { navigate: (p: Page) => void }) {
           </button>
         </div>
       </motion.div>
+    </div>
+  );
+}
+
+// ===================== EXPERTS PAGE =====================
+function ExpertsPage({ navigate }: { navigate: (p: Page) => void }) {
+  const allLawyers = [
+    { name: 'أ. محمد العلي', specialty: 'القانون الجنائي', experience: '15 سنة', city: 'الرياض', rating: 4.9, reviews: 128, gradient: 'from-[#0d7c4a] to-[#1a3a2a]' },
+    { name: 'أ. سارة الأحمد', specialty: 'القانون المدني', experience: '12 سنة', city: 'جدة', rating: 4.8, reviews: 95, gradient: 'from-[#1a3a2a] to-[#0d7c4a]' },
+    { name: 'د. خالد العمري', specialty: 'قانون الشركات', experience: '18 سنة', city: 'الدمام', rating: 4.9, reviews: 156, gradient: 'from-[#0d7c4a] to-[#c9a84c]' },
+    { name: 'أ. نورة السعيد', specialty: 'قانون الأسرة', experience: '10 سنة', city: 'الرياض', rating: 4.7, reviews: 87, gradient: 'from-[#c9a84c] to-[#0d7c4a]' },
+    { name: 'د. فهد الحربي', specialty: 'جرائم إلكترونية', experience: '20 سنة', city: 'الرياض', rating: 4.9, reviews: 210, gradient: 'from-[#0d7c4a] to-[#1a3a2a]' },
+    { name: 'أ. لمى الشمري', specialty: 'الملكية الفكرية', experience: '8 سنة', city: 'بريدة', rating: 4.6, reviews: 64, gradient: 'from-[#1a3a2a] to-[#c9a84c]' },
+    { name: 'د. سعد القحطاني', specialty: 'العقارات', experience: '14 سنة', city: 'الخبر', rating: 4.8, reviews: 112, gradient: 'from-[#c9a84c] to-[#0d7c4a]' },
+    { name: 'أ. هند العتيبي', specialty: 'قضايا العمل', experience: '11 سنة', city: 'تبوك', rating: 4.7, reviews: 78, gradient: 'from-[#0d7c4a] to-[#1a3a2a]' },
+  ];
+
+  const [filterSpecialty, setFilterSpecialty] = useState('');
+
+  const filteredLawyers = filterSpecialty
+    ? allLawyers.filter((l) => l.specialty === filterSpecialty)
+    : allLawyers;
+
+  return (
+    <div className="pt-24 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#0d7c4a] to-[#1a3a2a] flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#0d7c4a]/15">
+            <MIcon name="group" className="text-white text-4xl" />
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-black text-[#1a3a2a] mb-3">نخبة الخبراء المعتمدين</h1>
+          <p className="text-[#1a3a2a]/60 max-w-lg mx-auto">تصفح قائمة محامينا المعتمدين واختر الأنسب لقضيتك</p>
+        </motion.div>
+
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
+          <button
+            onClick={() => setFilterSpecialty('')}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${!filterSpecialty ? 'bg-[#0d7c4a] text-white' : 'bg-[#0d7c4a]/10 text-[#0d7c4a] hover:bg-[#0d7c4a]/20'}`}
+          >
+            الكل
+          </button>
+          {['القانون الجنائي', 'القانون المدني', 'قانون الشركات', 'قانون الأسرة', 'جرائم إلكترونية', 'الملكية الفكرية', 'العقارات', 'قضايا العمل'].map((spec) => (
+            <button
+              key={spec}
+              onClick={() => setFilterSpecialty(spec === filterSpecialty ? '' : spec)}
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${filterSpecialty === spec ? 'bg-[#0d7c4a] text-white' : 'bg-[#0d7c4a]/10 text-[#0d7c4a] hover:bg-[#0d7c4a]/20'}`}
+            >
+              {spec}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredLawyers.map((lawyer, i) => (
+            <motion.div
+              key={lawyer.name}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08 }}
+              className="group"
+            >
+              <div className="glass-panel rounded-[2rem] overflow-hidden hover:shadow-xl hover:shadow-[#0d7c4a]/10 transition-all duration-300">
+                <div className={`h-44 bg-gradient-to-br ${lawyer.gradient} relative overflow-hidden`}>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <MIcon name="person" className="text-white/20 text-7xl" />
+                  </div>
+                  <div className="absolute bottom-3 right-4 glass-btn-outline rounded-lg px-3 py-1 text-xs text-white font-medium">
+                    {lawyer.specialty}
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-[#1a3a2a] mb-1">{lawyer.name}</h3>
+                  <div className="flex items-center gap-3 text-xs text-[#1a3a2a]/50 mb-3">
+                    <span className="flex items-center gap-1"><Briefcase size={12} />{lawyer.experience}</span>
+                    <span className="flex items-center gap-1"><MapPin size={12} />{lawyer.city}</span>
+                  </div>
+                  <div className="flex items-center gap-1 mb-4">
+                    <div className="flex items-center gap-0.5">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star key={s} size={14} className={s <= Math.floor(lawyer.rating) ? 'fill-[#c9a84c] text-[#c9a84c]' : 'text-gray-200'} />
+                      ))}
+                    </div>
+                    <span className="text-xs font-bold text-[#1a3a2a]">{lawyer.rating}</span>
+                    <span className="text-xs text-[#1a3a2a]/40">({lawyer.reviews})</span>
+                  </div>
+                  <button
+                    onClick={() => navigate('register')}
+                    className="w-full py-3 rounded-xl bg-gradient-to-l from-[#0d7c4a] to-[#1a3a2a] text-white font-bold text-sm hover:shadow-lg hover:shadow-[#0d7c4a]/20 transition-all"
+                  >
+                    حجز استشارة
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -1850,7 +1979,7 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const showNavbar = ['home', 'faq', 'about', 'contact'].includes(currentPage);
+  const showNavbar = ['home', 'faq', 'about', 'contact', 'experts'].includes(currentPage);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -1868,6 +1997,7 @@ export default function App() {
             transition={{ duration: 0.3 }}
           >
             {currentPage === 'home' && <HomePage navigate={navigate} />}
+            {currentPage === 'experts' && <ExpertsPage navigate={navigate} />}
             {currentPage === 'register' && <RegisterPage navigate={navigate} />}
             {currentPage === 'login' && <LoginPage navigate={navigate} />}
             {currentPage === 'faq' && <FAQPage navigate={navigate} />}

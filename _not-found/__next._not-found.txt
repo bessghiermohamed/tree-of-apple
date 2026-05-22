@@ -1,4 +1,4 @@
 1:"$Sreact.fragment"
 2:I[39756,["/tree-of-apple/_next/static/chunks/4b935edd0cea1ee3.js","/tree-of-apple/_next/static/chunks/1c577ec45ff4c3f3.js","/tree-of-apple/_next/static/chunks/2f236954d6a65e12.js"],"default"]
 3:I[37457,["/tree-of-apple/_next/static/chunks/4b935edd0cea1ee3.js","/tree-of-apple/_next/static/chunks/1c577ec45ff4c3f3.js","/tree-of-apple/_next/static/chunks/2f236954d6a65e12.js"],"default"]
-0:{"buildId":"aznaX_5sfdzfHs85rvIhu","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"L1PE3L0l0LEH0lZMJIHoa","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
