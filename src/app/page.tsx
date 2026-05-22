@@ -1074,6 +1074,40 @@ function RegisterPage({ navigate }: { navigate: (p: Page) => void }) {
 function LoginPage({ navigate }: { navigate: (p: Page) => void }) {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [showWarningModal, setShowWarningModal] = useState(true);
+  const [modalProgress, setModalProgress] = useState(100);
+  const [isClosing, setIsClosing] = useState(false);
+
+  // Auto-close modal after reading time (~8 seconds for the text length)
+  useEffect(() => {
+    if (!showWarningModal) return;
+
+    const totalTime = 8000; // 8 seconds - enough to read the message
+    const interval = 50; // Update every 50ms for smooth progress
+    const decrement = (interval / totalTime) * 100;
+
+    const timer = setInterval(() => {
+      setModalProgress((prev) => {
+        const next = prev - decrement;
+        if (next <= 0) {
+          clearInterval(timer);
+          handleCloseModal();
+          return 0;
+        }
+        return next;
+      });
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [showWarningModal]);
+
+  const handleCloseModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setShowWarningModal(false);
+      setIsClosing(false);
+    }, 300);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4 relative">
@@ -1081,6 +1115,107 @@ function LoginPage({ navigate }: { navigate: (p: Page) => void }) {
         <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-[#0d7c4a]/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#c9a84c]/5 rounded-full blur-3xl" />
       </div>
+
+      {/* Warning Modal Overlay */}
+      <AnimatePresence>
+        {showWarningModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isClosing ? 0 : 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+            style={{ direction: 'rtl' }}
+          >
+            {/* Backdrop with blur */}
+            <div
+              className="absolute inset-0 bg-black/60 backdrop-blur-md"
+              onClick={handleCloseModal}
+            />
+
+            {/* Modal Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: 20 }}
+              animate={{ opacity: isClosing ? 0 : 1, scale: isClosing ? 0.9 : 1, y: isClosing ? 20 : 0 }}
+              exit={{ opacity: 0, scale: 0.85, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="relative z-10 w-full max-w-lg"
+            >
+              <div className="glass-panel rounded-[2rem] overflow-hidden shadow-2xl shadow-black/20">
+                {/* Header gradient bar */}
+                <div className="relative bg-gradient-to-l from-[#c9a84c] to-[#e8c464] px-6 py-4">
+                  <div className="absolute inset-0 bg-black/5" />
+                  <div className="relative flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <AlertTriangle size={24} className="text-[#1a3a2a]" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-black text-[#1a3a2a]">تنبيه هام</h3>
+                      <p className="text-xs text-[#1a3a2a]/60">يرجى القراءة بعناية</p>
+                    </div>
+                  </div>
+                  {/* Close button */}
+                  <button
+                    onClick={handleCloseModal}
+                    className="absolute top-3 left-3 w-8 h-8 rounded-lg bg-white/20 hover:bg-white/40 flex items-center justify-center transition-colors"
+                  >
+                    <span className="text-[#1a3a2a] text-lg font-bold">✕</span>
+                  </button>
+                </div>
+
+                {/* Body */}
+                <div className="px-6 py-6 sm:px-8 sm:py-8">
+                  <div className="space-y-5">
+                    {/* Main message */}
+                    <div className="bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-2xl p-5">
+                      <p className="text-base sm:text-lg font-bold text-[#1a3a2a] leading-relaxed text-center">
+                        قد تم إنشاء هذا لإبراز مخاطر استضافة
+                      </p>
+                    </div>
+
+                    {/* Sub message */}
+                    <div className="bg-[#0d7c4a]/5 border border-[#0d7c4a]/10 rounded-2xl p-5">
+                      <p className="text-sm sm:text-base text-[#1a3a2a]/80 leading-relaxed text-center font-medium">
+                        ( تسك عملي أفضل منهم في الواقع )
+                      </p>
+                    </div>
+
+                    {/* Author */}
+                    <div className="flex items-center justify-center gap-3 pt-2">
+                      <div className="h-px flex-1 bg-gradient-to-l from-[#1a3a2a]/20 to-transparent" />
+                      <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#1a3a2a]/5">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0d7c4a] to-[#1a3a2a] flex items-center justify-center">
+                          <MIcon name="person" className="text-white text-sm" />
+                        </div>
+                        <span className="text-sm font-bold text-[#1a3a2a]">من طرف بصغير محمد</span>
+                      </div>
+                      <div className="h-px flex-1 bg-gradient-to-r from-[#1a3a2a]/20 to-transparent" />
+                    </div>
+                  </div>
+
+                  {/* Close button */}
+                  <button
+                    onClick={handleCloseModal}
+                    className="w-full mt-6 py-3.5 rounded-2xl bg-gradient-to-l from-[#0d7c4a] to-[#1a3a2a] text-white font-bold text-base hover:shadow-lg hover:shadow-[#0d7c4a]/25 transition-all flex items-center justify-center gap-2"
+                  >
+                    <ShieldCheck size={20} />
+                    فهمت، متابعة لتسجيل الدخول
+                  </button>
+                </div>
+
+                {/* Auto-close progress bar */}
+                <div className="h-1 bg-gray-100">
+                  <motion.div
+                    className="h-full bg-gradient-to-l from-[#c9a84c] to-[#0d7c4a]"
+                    style={{ width: `${modalProgress}%` }}
+                    transition={{ duration: 0.05 }}
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
