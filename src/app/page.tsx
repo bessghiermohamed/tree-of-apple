@@ -1854,6 +1854,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <WelcomeModal />
+
       {showNavbar && <Navbar currentPage={currentPage} navigate={navigate} />}
 
       <main className="flex-1">
